@@ -1,0 +1,110 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="eea">
+
+    <five:registerPackage package="." initialize=".initialize" />
+
+    <include file="behaviors.zcml" />
+
+    <genericsetup:registerProfile
+        name="default"
+        title="eea.ied.policy"
+        description="Generic virtual-pages traversal: map any container to a template page."
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        directory="profiles/default"
+        post_handler=".setuphandlers.post_install"
+    />
+
+    <genericsetup:registerProfile
+        name="uninstall"
+        title="eea.ied.policy (uninstall)"
+        description="Uninstall eea.ied.policy: removes browser layer and strips the VirtualPages behavior from any Dexterity types that had it enabled."
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        directory="profiles/uninstall"
+        post_handler=".setuphandlers.post_uninstall"
+    />
+
+    <utility
+        factory=".setuphandlers.HiddenProfiles"
+        provides="Products.CMFPlone.interfaces.INonInstallable"
+        name="eea.ied.policy"
+    />
+
+    <adapter
+        factory=".traversal.VirtualPagesTraverse"
+        provides="zope.publisher.interfaces.IPublishTraverse"
+        for=".interfaces.IVirtualPagesContainer
+           zope.publisher.interfaces.browser.IBrowserRequest"
+    />
+
+    <!-- Virtual page services: GET (with ETag + 404 hook), POST/DELETE
+         (405), PATCH (already routes writes to template), @types
+         (filters virtualized fields), @workflow POST/PATCH (405). -->
+
+    <plone:service
+        method="GET"
+        factory=".services.content.VirtualPageGet"
+        for=".interfaces.IVirtualPage"
+        permission="zope2.View"
+    />
+
+    <plone:service
+        method="POST"
+        factory=".services.content.VirtualPagePost"
+        for=".interfaces.IVirtualPage"
+        permission="zope2.View"
+    />
+
+    <plone:service
+        method="DELETE"
+        factory=".services.content.VirtualPageDelete"
+        for=".interfaces.IVirtualPage"
+        permission="zope2.View"
+    />
+
+    <plone:service
+        method="PATCH"
+        factory=".services.patch.VirtualPagePatch"
+        for=".interfaces.IVirtualPage"
+        permission="cmf.ModifyPortalContent"
+    />
+
+    <plone:service
+        method="GET"
+        accept="application/json,application/schema+json"
+        factory=".services.types.VirtualPageTypesGet"
+        for=".interfaces.IVirtualPage"
+        permission="zope2.View"
+        name="@types"
+    />
+
+    <plone:service
+        method="POST"
+        factory=".services.workflow.VirtualPageWorkflowBlock"
+        for=".interfaces.IVirtualPage"
+        permission="zope2.View"
+        name="@workflow"
+    />
+
+    <plone:service
+        method="PATCH"
+        factory=".services.workflow.VirtualPageWorkflowBlock"
+        for=".interfaces.IVirtualPage"
+        permission="zope2.View"
+        name="@workflow"
+    />
+
+    <!-- Lock operations on a virtual proxy redirect to the template. -->
+    <adapter factory=".lockable.VirtualPageLockable" />
+
+    <!-- Annotate the JSON payload with `is_virtual` + `virtual_id`. -->
+    <adapter factory=".serializer.VirtualPageSerializer" />
+
+    <subscriber handler=".subscribers.inject_virtual_id_param" />
+    <subscriber handler=".subscribers.facility_inject_site_inspire_id" />
+
+</configure>

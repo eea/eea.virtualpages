@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="eea">
+
+  <plone:behavior
+      title="Virtual Pages"
+      name="eea.ied.policy.virtualpages"
+      description="Resolve any sub-name of this container to a transient proxy of a template page."
+      provides=".interfaces.IVirtualPagesBehavior"
+      marker=".interfaces.IVirtualPagesContainer"
+      factory=".behaviors.virtualpages.VirtualPages"
+      />
+
+  <plone:behavior
+      title="File field"
+      name="eea.ied.policy.filefield"
+      description="Adds an optional file field to content types."
+      provides=".interfaces.IFileField"
+      factory=".behaviors.filefield.FileField"
+      />
+
+</configure>
