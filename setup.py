@@ -11,7 +11,9 @@ with open(join(*PATH), "r", encoding="utf-8") as fh:
     VERSION = fh.read().strip()
 
 with open("README.rst", "r", encoding="utf-8") as readme_file:
-    with open(os.path.join("docs", "HISTORY.txt"), "r", encoding="utf-8") as history_file:
+    with open(
+        os.path.join("docs", "HISTORY.txt"), "r", encoding="utf-8"
+    ) as history_file:
         LONG_DESCRIPTION = readme_file.read() + "\n" + history_file.read()
 
 setup(

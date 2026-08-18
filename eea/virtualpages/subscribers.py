@@ -51,7 +51,6 @@ def inject_virtual_id_param(event):
 
 @adapter(IVirtualPageBuiltEvent)
 def facility_inject_site_inspire_id(event):
-
     def build_data_query(data_query, connector_data):
         rows = connector_data.get("data", {}).get("results") or []
         if not rows:
