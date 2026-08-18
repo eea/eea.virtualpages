@@ -7,7 +7,7 @@ etc. Standard zope.event/zope.component subscriber registration.
 Example:
 
     from zope.component import adapter
-    from eea.ied.policy.events import IVirtualPageBuiltEvent
+    from eea.virtualpages.events import IVirtualPageBuiltEvent
 
     @adapter(IVirtualPageBuiltEvent)
     def enrich_page(event):
@@ -29,12 +29,8 @@ from zope.interface import Attribute, Interface, implementer
 class IVirtualPageBuiltEvent(Interface):
     """A virtual page proxy has just been built and is about to be served."""
 
-    container = Attribute(
-        "The IVirtualPagesContainer the request traversed."
-    )
-    virtual = Attribute(
-        "The transient proxy object (provides IVirtualPage)."
-    )
+    container = Attribute("The IVirtualPagesContainer the request traversed.")
+    virtual = Attribute("The transient proxy object (provides IVirtualPage).")
     name = Attribute("The URL segment used as the virtual id.")
     request = Attribute("The current request.")
 

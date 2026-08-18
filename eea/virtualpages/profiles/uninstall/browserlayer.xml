@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layers>
-  <layer name="eea.ied.policy" remove="True" />
+  <layer name="eea.virtualpages" remove="True" />
 </layers>

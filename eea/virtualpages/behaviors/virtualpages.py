@@ -4,7 +4,7 @@ from plone.dexterity.interfaces import IDexterityContent
 from zope.component import adapter
 from zope.interface import implementer
 
-from eea.ied.policy.interfaces import IVirtualPagesBehavior
+from eea.virtualpages.interfaces import IVirtualPagesBehavior
 
 
 @implementer(IVirtualPagesBehavior)

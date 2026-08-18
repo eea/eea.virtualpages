@@ -1,5 +1,5 @@
-eea.ied.policy
-==============
+eea.virtualpages
+================
 
 Generic virtual-pages traversal for Plone 6.
 
@@ -16,8 +16,8 @@ route, middleware, or extra configuration.
 Install
 -------
 
-1. Add ``eea.ied.policy`` to buildout ``develop`` and ``eggs``. Restart Zope.
-2. Plone Site Setup → Add-ons → install **eea.ied.policy**.
+1. Add ``eea.virtualpages`` to buildout ``develop`` and ``eggs``. Restart Zope.
+2. Plone Site Setup → Add-ons → install **eea.virtualpages**.
 3. Site Setup → Dexterity Content Types → choose a type (e.g. *Document*)
    → Behaviors → enable **Virtual Pages**.
 4. Create the page (e.g. ``/items``). Edit blocks normally.

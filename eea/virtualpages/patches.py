@@ -14,22 +14,20 @@ behaviour is preserved.
 from zope.component import queryMultiAdapter
 from zope.publisher.interfaces import IPublishTraverse
 
-from eea.ied.policy.interfaces import IVirtualPagesContainer
+from eea.virtualpages.interfaces import IVirtualPagesContainer
 
 
 def install():
     from plone.rest.traverse import RESTWrapper
 
-    if getattr(RESTWrapper.publishTraverse, "_eea_ied_patched", False):
+    if getattr(RESTWrapper.publishTraverse, "_eea_virtualpages_patched", False):
         return
 
     original = RESTWrapper.publishTraverse
 
     def publishTraverse(self, request, name):
         if IVirtualPagesContainer.providedBy(self.context):
-            adapter = queryMultiAdapter(
-                (self.context, request), IPublishTraverse
-            )
+            adapter = queryMultiAdapter((self.context, request), IPublishTraverse)
             if adapter is not None:
                 try:
                     obj = adapter.publishTraverse(request, name)
@@ -39,5 +37,5 @@ def install():
                     return RESTWrapper(obj, request)
         return original(self, request, name)
 
-    publishTraverse._eea_ied_patched = True
+    publishTraverse._eea_virtualpages_patched = True
     RESTWrapper.publishTraverse = publishTraverse

@@ -18,7 +18,7 @@ URL: /<container>/<id>[/sub-path]
   /<container>  ── real Plone object, has IVirtualPagesContainer marker
        │
        ▼  publishTraverse(<id>)
-  VirtualPagesTraverse  (eea.ied.policy.traversal)
+  VirtualPagesTraverse  (eea.virtualpages.traversal)
        │
        ├── reserved name?  ──► standard publishing (DexterityPublishTraverse)
        ├── real child?     ──► return that child
@@ -32,7 +32,7 @@ URL: /<container>/<id>[/sub-path]
    └── virtual.__of__(template)                    (acquisition wrapper)
        │
        ▼ notify(VirtualPageBuiltEvent)
-  Subscribers (eea.ied.policy.subscribers + your own)
+  Subscribers (eea.virtualpages.subscribers + your own)
    ├── inject_virtual_id_param   → updates `data_query`
    ├── enrich_<your-container>   → set title, description, custom attrs
    ├── event.set_field(name, v)  → mutate + register override

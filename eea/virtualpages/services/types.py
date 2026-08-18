@@ -18,9 +18,7 @@ class VirtualPageTypesGet(TypesGet):
         if not isinstance(result, dict):
             return result
 
-        overrides = getattr(
-            aq_base(self.context), "_v_virtual_overrides", None
-        )
+        overrides = getattr(aq_base(self.context), "_v_virtual_overrides", None)
         if not overrides:
             return result
 

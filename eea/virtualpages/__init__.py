@@ -1,12 +1,12 @@
-"""eea.ied.policy package."""
+"""Virtual pages for Plone Dexterity content."""
 
 from zope.i18nmessageid import MessageFactory
 
-EEAIEDMessageFactory = MessageFactory("eea")
+EEAMessageFactory = MessageFactory("eea")
 
 
 def initialize(context):
     """Zope product init hook — apply runtime patches once."""
-    from eea.ied.policy import patches
+    from eea.virtualpages import patches
 
     patches.install()

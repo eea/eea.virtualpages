@@ -14,7 +14,7 @@ from Acquisition import aq_inner, aq_parent
 from plone.locking.lockable import TTWLockable
 from zope.component import adapter
 
-from eea.ied.policy.interfaces import IVirtualPage
+from eea.virtualpages.interfaces import IVirtualPage
 
 
 @adapter(IVirtualPage)

@@ -1,6 +1,6 @@
 """Virtual-pages traversal.
 
-When the `eea.ied.policy.virtualpages` behavior is enabled on a content
+When the `eea.virtualpages.virtualpages` behavior is enabled on a content
 object AND its `virtual_pages_enabled` flag is True, any sub-name
 traversed under it resolves to a transient proxy of the object itself.
 
@@ -14,7 +14,7 @@ from Acquisition import aq_base
 from plone.dexterity.browser.traversal import DexterityPublishTraverse
 from zExceptions import NotFound
 
-from eea.ied.policy.transient import TransientJar
+from eea.virtualpages.transient import TransientJar
 
 from zope.component import adapter
 from zope.event import notify
@@ -22,8 +22,8 @@ from zope.interface import alsoProvides, implementer
 from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces.browser import IBrowserRequest
 
-from eea.ied.policy.events import VirtualPageBuiltEvent
-from eea.ied.policy.interfaces import (
+from eea.virtualpages.events import VirtualPageBuiltEvent
+from eea.virtualpages.interfaces import (
     IVirtualPage,
     IVirtualPagesBehavior,
     IVirtualPagesContainer,
@@ -32,14 +32,18 @@ from eea.ied.policy.interfaces import (
 
 # Names that must NOT be intercepted: REST API verbs, Plone management views,
 # add/edit etc. Standard publication handles them.
-RESERVED_NAMES = frozenset(
-    {"edit", "add", "delete", "view", "manage", "manage_main"}
-)
+RESERVED_NAMES = frozenset({"edit", "add", "delete", "view", "manage", "manage_main"})
 
 # plone.restapi services are registered as views named like
 # `GET_application_json_*`. They must always go through standard publishing.
 HTTP_METHOD_PREFIXES = (
-    "GET_", "POST_", "PUT_", "PATCH_", "DELETE_", "OPTIONS_", "HEAD_",
+    "GET_",
+    "POST_",
+    "PUT_",
+    "PATCH_",
+    "DELETE_",
+    "OPTIONS_",
+    "HEAD_",
 )
 
 
@@ -112,8 +116,7 @@ class VirtualPagesTraverse(DexterityPublishTraverse):
 
         behavior = IVirtualPagesBehavior(self.context, None)
         enabled = bool(
-            behavior is not None
-            and getattr(behavior, "virtual_pages_enabled", False)
+            behavior is not None and getattr(behavior, "virtual_pages_enabled", False)
         )
 
         # Per-instance toggle off → standard publishing.

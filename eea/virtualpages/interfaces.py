@@ -1,4 +1,4 @@
-"""Interfaces for eea.ied.policy."""
+"""Interfaces for eea.virtualpages."""
 
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.dexterity.interfaces import IDexterityContent
@@ -9,11 +9,11 @@ from zope import schema
 from zope.interface import provider
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
-from eea.ied.policy import EEAIEDMessageFactory as _
+from eea.virtualpages import EEAMessageFactory as _
 
 
-class IEEAIEDPolicyLayer(IDefaultBrowserLayer):
-    """Marker browser layer for eea.ied.policy."""
+class IEeaVirtualPagesLayer(IDefaultBrowserLayer):
+    """Marker browser layer for eea.virtualpages."""
 
 
 class IVirtualPagesContainer(IDexterityContent):

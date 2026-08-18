@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-        GIT_NAME = "eea.ied.policy"
+        GIT_NAME = "eea.virtualpages"
         SONARQUBE_TAGS = "demo-www.eea.europa.eu,www.eea.europa.eu-en,www.eea.europa.eu,biodiversity.europa.eu,industry.eea.europa.eu,forest.eea.europa.eu,demo-ied.eea.europa.eu,www.ied.eea.europa.eu-en,demo-water.devel5cph.eea.europa.eu-freshwater,water.europa.eu-freshwater"
     }
 
@@ -37,8 +37,8 @@ pipeline {
                 checkout scm
                 fix_result = sh(script: '''docker run --pull=always --name="$BUILD_TAG-ruff-fix" -e GIT_SRC="https://github.com/eea/$GIT_NAME.git" -e GIT_NAME="$GIT_NAME" -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" eeacms/ruff format''', returnStatus: true)
                 sh '''docker cp $BUILD_TAG-ruff-fix:/code/$GIT_NAME .'''
-                sh '''cp -rf eea.ied.policy/* .'''
-                sh '''rm -rf eea.ied.policy'''
+                sh '''cp -rf eea.virtualpages/* .'''
+                sh '''rm -rf eea.virtualpages'''
                 sh '''docker rm -v $BUILD_TAG-ruff-fix'''
                 FOUND_FIX = sh(script: '''git diff --name-only '*.py' | wc -l''', returnStdout: true).trim()
 
@@ -85,8 +85,8 @@ pipeline {
                 checkout scm
                 fix_result = sh(script: '''docker run --pull=always --name="$BUILD_TAG-ruff-fix" -e GIT_SRC="https://github.com/eea/$GIT_NAME.git" -e GIT_NAME="$GIT_NAME" -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" eeacms/ruff check''', returnStatus: true)
                 sh '''docker cp $BUILD_TAG-ruff-fix:/code/$GIT_NAME .'''
-                sh '''cp -rf eea.ied.policy/* .'''
-                sh '''rm -rf eea.ied.policy'''
+                sh '''cp -rf eea.virtualpages/* .'''
+                sh '''rm -rf eea.virtualpages'''
                 sh '''docker rm -v $BUILD_TAG-ruff-fix'''
                 FOUND_FIX = sh(script: '''git diff --name-only '*.py' | wc -l''', returnStdout: true).trim()
 

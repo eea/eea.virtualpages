@@ -5,7 +5,7 @@ services:
     ports:
       - "8080"
     volumes:
-      - ../../:/plone/instance/src/eea.ied.policy
+      - ../../:/plone/instance/src/eea.virtualpages
     environment:
-      ADDONS: "eea.ied.policy[test]"
-      DEVELOP: "src/eea.ied.policy"
+      ADDONS: "eea.virtualpages[test]"
+      DEVELOP: "src/eea.virtualpages"

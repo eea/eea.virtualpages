@@ -5,7 +5,7 @@ from Products.CMFPlone.interfaces import INonInstallable
 from zope.interface import implementer
 
 
-BEHAVIOR_NAME = "eea.ied.policy.virtualpages"
+BEHAVIOR_NAME = "eea.virtualpages.virtualpages"
 
 
 @implementer(INonInstallable)
@@ -13,7 +13,7 @@ class HiddenProfiles:
     """Hide internal profiles from the Plone add-ons control panel."""
 
     def getNonInstallableProfiles(self):
-        return ["eea.ied.policy:uninstall"]
+        return ["eea.virtualpages:uninstall"]
 
     def getNonInstallableProducts(self):
         return []

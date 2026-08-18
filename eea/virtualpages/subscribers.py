@@ -10,10 +10,10 @@ from zope.component import adapter, queryMultiAdapter
 from plone.restapi.deserializer import json_body
 from plone.restapi.interfaces import IExpandableElement
 
-from eea.ied.policy.events import IVirtualPageBuiltEvent
-from eea.ied.policy.interfaces import IVirtualPagesBehavior
+from eea.virtualpages.events import IVirtualPageBuiltEvent
+from eea.virtualpages.interfaces import IVirtualPagesBehavior
 
-logger = logging.getLogger("eea.ied.policy.subscribers")
+logger = logging.getLogger("eea.virtualpages.subscribers")
 
 DATA_QUERY_OPERATION = "plone.app.querystring.operation.selection.is"
 
@@ -59,9 +59,11 @@ def facility_inject_site_inspire_id(event):
             return data_query
 
         # results may be column-oriented dict or row list — adjust to your shape
-        row = rows[0] if isinstance(rows, list) else {
-            k: v[0] for k, v in rows.items() if v
-        }
+        row = (
+            rows[0]
+            if isinstance(rows, list)
+            else {k: v[0] for k, v in rows.items() if v}
+        )
         site_id = row.get("siteInspireID")
         if not site_id:
             return data_query
@@ -109,9 +111,7 @@ def facility_inject_site_inspire_id(event):
         try:
             result = connector(expand=True)
         except Exception:
-            logger.exception(
-                "facility_inject_site_inspire_id connector failed"
-            )
+            logger.exception("facility_inject_site_inspire_id connector failed")
 
         connector_data = result.get("connector-data", None)
 

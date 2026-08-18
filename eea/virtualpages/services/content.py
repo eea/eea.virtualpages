@@ -46,7 +46,8 @@ def _compute_etag(virtual):
     template_serial = getattr(aq_base(template), "_p_serial", b"") or b""
     overrides = getattr(base, "_v_virtual_overrides", ()) or ()
     parts = [
-        template_serial.hex() if isinstance(template_serial, bytes)
+        template_serial.hex()
+        if isinstance(template_serial, bytes)
         else str(template_serial),
         getattr(base, "id", ""),
         ",".join(sorted(overrides)),

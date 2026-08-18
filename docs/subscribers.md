@@ -4,12 +4,12 @@ Mutate the virtual proxy at request time without touching the template.
 
 ## Registration
 
-Subscribe to `IVirtualPageBuiltEvent` from `eea.ied.policy.events`.
+Subscribe to `IVirtualPageBuiltEvent` from `eea.virtualpages.events`.
 
 ```python
 # my_addon/subscribers.py
 from zope.component import adapter
-from eea.ied.policy.events import IVirtualPageBuiltEvent
+from eea.virtualpages.events import IVirtualPageBuiltEvent
 
 
 @adapter(IVirtualPageBuiltEvent)

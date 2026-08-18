@@ -20,18 +20,14 @@ class VirtualPagePatch(ContentPatch):
         virtual = self.context
         template = aq_parent(aq_inner(virtual))
 
-        overrides = getattr(
-            aq_base(virtual), "_v_virtual_overrides", frozenset()
-        )
+        overrides = getattr(aq_base(virtual), "_v_virtual_overrides", frozenset())
         if overrides:
             try:
                 data = json_body(self.request)
             except Exception:
                 data = None
             if isinstance(data, dict):
-                stripped = {
-                    k: v for k, v in data.items() if k not in overrides
-                }
+                stripped = {k: v for k, v in data.items() if k not in overrides}
                 self.request["BODY"] = json.dumps(stripped).encode("utf-8")
 
         # Apply the write to the real persistent template.

@@ -5,7 +5,7 @@
 
   <plone:behavior
       title="Virtual Pages"
-      name="eea.ied.policy.virtualpages"
+      name="eea.virtualpages.virtualpages"
       description="Resolve any sub-name of this container to a transient proxy of a template page."
       provides=".interfaces.IVirtualPagesBehavior"
       marker=".interfaces.IVirtualPagesContainer"
@@ -14,7 +14,7 @@
 
   <plone:behavior
       title="File field"
-      name="eea.ied.policy.filefield"
+      name="eea.virtualpages.filefield"
       description="Adds an optional file field to content types."
       provides=".interfaces.IFileField"
       factory=".behaviors.filefield.FileField"

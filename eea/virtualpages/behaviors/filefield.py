@@ -4,7 +4,7 @@ from plone.dexterity.interfaces import IDexterityContent
 from zope.component import adapter
 from zope.interface import implementer
 
-from eea.ied.policy.interfaces import IFileField
+from eea.virtualpages.interfaces import IFileField
 
 
 @implementer(IFileField)
@@ -17,7 +17,7 @@ class FileField:
 
     @property
     def file(self):
-        return getattr(self.context, 'file', None)
+        return getattr(self.context, "file", None)
 
     @file.setter
     def file(self, value):
