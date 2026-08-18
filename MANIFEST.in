@@ -1,5 +1,8 @@
 include *.md *.rst *.txt
-graft eea
 graft docs
-global-exclude *.pyc
+graft eea
+global-exclude *pyc
 global-exclude *~
+global-exclude *.un~
+
+global-include *.mo
