@@ -98,7 +98,7 @@ def facility_inject_site_inspire_id(event):
         connector_data = getattr(aq_virtual, "connector_data", None)
         if connector_data:
             rebuilt = build_data_query(data_query, connector_data)
-            setattr(virtual, "data_query", rebuilt)
+            event.set_field("data_query", rebuilt)
 
         connector = queryMultiAdapter(
             (virtual, request), IExpandableElement, name="connector-data"
@@ -119,8 +119,7 @@ def facility_inject_site_inspire_id(event):
             body = json_body(request)
             rebuilt = build_data_query(data_query, connector_data)
             body["data_query"] = rebuilt
-            connector_data["payload"]["data_query"] = rebuilt
-            setattr(virtual, "data_query", rebuilt)
+            event.set_field("data_query", rebuilt)
             aq_virtual.connector_data = connector_data
             request["BODY"] = json.dumps(body)
     except Exception:
